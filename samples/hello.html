@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Demo</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+        color: white;
+      }
+      button {
+        font: inherit;
+        padding: 0.75rem 1.25rem;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello from the HTML gallery</h1>
+    <p id="n">Clicks: 0</p>
+    <button type="button" id="b">+1</button>
+    <script>
+      let n = 0;
+      document.getElementById("b").onclick = () => {
+        n += 1;
+        document.getElementById("n").textContent = "Clicks: " + n;
+      };
+    </script>
+  </body>
+</html>

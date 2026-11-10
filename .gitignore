@@ -1,0 +1,9 @@
+node_modules/
+.idea/
+.env
+.env.*
+!.env.example
+.DS_Store
+data/catalog.json
+data/uploads/*
+!data/uploads/.gitkeep

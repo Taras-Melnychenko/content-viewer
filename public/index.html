@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Content Viewer</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <h1>Content Viewer</h1>
+        <p class="tagline">Internal gallery for team HTML content</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn ghost" id="open-raw" disabled>
+          Open in new tab
+        </button>
+        <button type="button" class="btn primary" id="open-upload">Upload HTML</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel" id="gallery-panel">
+        <h2>Catalog</h2>
+        <p class="hint" id="gallery-hint">Upload your first file — it will appear here.</p>
+        <ul class="card-grid" id="gallery" hidden></ul>
+      </section>
+
+      <section class="panel viewer-panel" id="viewer-panel" hidden>
+        <div class="viewer-toolbar">
+          <button type="button" class="btn ghost" id="back-to-gallery">← Back to catalog</button>
+          <div class="viewer-meta">
+            <h2 id="viewer-title"></h2>
+            <p id="viewer-description"></p>
+          </div>
+        </div>
+        <iframe
+          id="viewer-frame"
+          title="HTML content preview"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          loading="lazy"
+        ></iframe>
+      </section>
+    </main>
+
+    <dialog id="upload-dialog" class="upload-dialog">
+      <form id="upload-form" method="dialog" enctype="multipart/form-data">
+        <header>
+          <h2>New HTML content</h2>
+          <button type="button" class="icon-btn" id="close-upload" aria-label="Close">×</button>
+        </header>
+        <label>
+          Title
+          <input type="text" name="title" id="title" placeholder="Optional — defaults to file name" />
+        </label>
+        <label>
+          Description
+          <textarea name="description" id="description" rows="3" placeholder="Short note: audience and what it shows"></textarea>
+        </label>
+        <label id="upload-token-row" hidden>
+          Upload token
+          <input
+            type="password"
+            id="upload-token"
+            autocomplete="off"
+            placeholder="Required for publishing on production"
+          />
+        </label>
+        <label>
+          HTML file
+          <input type="file" name="file" id="file" accept=".html,.htm,text/html" required />
+        </label>
+        <p class="form-error" id="upload-error" hidden></p>
+        <footer>
+          <button type="button" class="btn ghost" id="cancel-upload">Cancel</button>
+          <button type="submit" class="btn primary" id="submit-upload">Publish</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
