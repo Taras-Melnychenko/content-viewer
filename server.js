@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { readCatalog, writeCatalog } from "./lib/catalogStore.js";
 import { deleteHtml, saveHtml, loadHtml } from "./lib/htmlStore.js";
 import { checkUploadAuth, isUploadAuthRequired } from "./lib/uploadAuth.js";
+import { isVercelRuntime, storageLabel, usesBlobStorage } from "./lib/storageMode.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT) || 3000;
@@ -36,10 +37,18 @@ app.use(express.json({ limit: "32kb" }));
 app.use(express.static(PUBLIC_DIR));
 
 app.get("/api/health", (_req, res) => {
-  res.json({
-    ok: true,
-    storage: process.env.BLOB_READ_WRITE_TOKEN ? "vercel-blob" : "local-disk",
+  const blobOk = usesBlobStorage();
+  const misconfigured = isVercelRuntime() && !blobOk;
+  res.status(misconfigured ? 503 : 200).json({
+    ok: !misconfigured,
+    storage: storageLabel(),
+    blobConfigured: blobOk,
     uploadAuthRequired: isUploadAuthRequired(),
+    ...(misconfigured
+      ? {
+          hint: "Connect Vercel Blob to this project (Storage → Blob), then redeploy.",
+        }
+      : {}),
   });
 });
 

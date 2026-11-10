@@ -25,11 +25,12 @@ http://localhost:3000 — try uploading `samples/hello.html`
 ## Deploy on Vercel
 
 1. Import the repository on [Vercel](https://vercel.com).
-2. **Storage → Create → Blob** on the project (`BLOB_READ_WRITE_TOKEN` is set automatically).
-3. Deploy. Routing in `vercel.json` sends all traffic to one `@vercel/node` handler (`server.js`).
-4. Share the public URL Vercel provides with stakeholders.
+2. **Storage → Connect Store → Blob** on the same Vercel project (`BLOB_READ_WRITE_TOKEN` must appear under Settings → Environment Variables).
+3. **Redeploy** after connecting Blob (a deployment without the token uses a read-only filesystem and uploads will fail).
+4. Routing in `vercel.json` sends all traffic to one `@vercel/node` handler (`server.js`).
+5. Share the public URL Vercel provides with stakeholders.
 
-Check: `GET /api/health` → `"storage": "vercel-blob"`.
+Check: `GET /api/health` → `"storage": "vercel-blob"`, `"blobConfigured": true`.
 
 ### Restricting uploads (recommended on Vercel)
 
